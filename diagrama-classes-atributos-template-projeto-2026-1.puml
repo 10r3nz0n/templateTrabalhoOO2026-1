@@ -1,0 +1,137 @@
+@startuml
+' Diagrama de classes simplificado a partir do projeto template-projeto-2026-1
+' Gerador por IA a partir do código do professor Lorenzon
+' Linguagem: Java
+
+title Diagrama de Classes - Atributos - template-projeto-2026-1
+
+left to right direction
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+hide empty members
+
+package "temadogrupo" {
+
+  class App <<Singleton>> {
+    - {static} instancia : App
+    - aplicacaoFactory : AplicacaoFactory
+  }
+
+  package "config" {
+    class AplicacaoFactory <<Factory>> {
+      - produtoController : ProdutoController
+    }
+  }
+
+  package "controller" {
+    class ProdutoController <<Controller>> {
+      - produtoService : ProdutoService
+    }
+  }
+
+  package "model" {
+    class Produto <<Entity>> {
+      - id : int
+      - nome : String
+    }
+
+    class "Produto.ProdutoBuilder" as ProdutoBuilder <<Builder>> {
+      - id : int
+      - nome : String
+    }
+  }
+
+  package "repository" {
+    interface ProdutoRepository <<Repository>> {
+    }
+
+    class ProdutoRepositoryMemoria <<Repository>> {
+      - produtos : List<Produto>
+    }
+
+    class ProdutoRepositoryPersistenciaOONativo <<Repository>> {
+      - produtos : List<Produto>
+    }
+  }
+
+  package "service" {
+    class ProdutoService <<Service>> {
+      - produtoRepository : ProdutoRepository
+    }
+  }
+
+  package "utilitarios" {
+    class GeradorIdentificadorUnico <<Utility>> {
+      - {static} CONTADOR_INT : AtomicInteger
+      - {static} CONTADOR_LONG : AtomicLong
+    }
+
+    class Teclado <<Utility>> {
+    }
+
+    class Video <<Utility>> {
+    }
+
+    package "menu" {
+      class Menu <<View>> {
+        - titulo : String
+        - opcoesMenu : ArrayList<String>
+      }
+
+      class MenuPrincipal <<View>> {
+      }
+
+      class MenuProduto <<View>> {
+      }
+    }
+  }
+}
+
+' Relacionamentos estruturais e dependencias principais
+App "1" *-- "1" AplicacaoFactory : possui
+App ..> Video : inicializa tela
+App ..> MenuPrincipal : menu inicial
+App ..> ProdutoController : executa modulo
+
+AplicacaoFactory "1" o-- "0..1" ProdutoController : cacheia
+AplicacaoFactory ..> ProdutoRepositoryMemoria : instancia
+AplicacaoFactory ..> ProdutoRepository : retorna abstracao
+AplicacaoFactory ..> ProdutoService : instancia
+
+ProdutoController "1" --> "1" ProdutoService : usa
+ProdutoController ..> Produto : cria
+ProdutoController ..> Teclado : le dados
+ProdutoController ..> Video : exibe mensagens
+ProdutoController ..> MenuProduto : exibe menu
+
+ProdutoService "1" --> "1" ProdutoRepository : depende de
+ProdutoService ..> Produto : valida
+
+ProdutoRepository <|.. ProdutoRepositoryMemoria
+ProdutoRepository <|.. ProdutoRepositoryPersistenciaOONativo
+ProdutoRepository ..> Produto : contrato
+ProdutoRepositoryMemoria "1" o-- "0..*" Produto : armazena
+ProdutoRepositoryPersistenciaOONativo "1" o-- "0..*" Produto : armazena
+
+Produto ..> ProdutoBuilder : builder
+ProdutoBuilder ..> Produto : construir
+
+MenuPrincipal ..> Menu : cria
+MenuProduto ..> Menu : cria
+Menu ..> Teclado : le opcao
+Menu ..> Video : exibe
+
+Teclado ..> Video : mensagens de validacao
+Video ..> Teclado : pausa leitura
+
+note right of ProdutoRepository
+  Abstracao usada para aplicar injecao de dependencia.
+  ProdutoService depende do contrato, nao da persistencia concreta.
+end note
+
+note bottom of ProdutoRepositoryPersistenciaOONativo
+  Classe prevista para persistencia OO nativa.
+  Os metodos ainda estao marcados como TODO no codigo-fonte.
+end note
+
+@enduml
