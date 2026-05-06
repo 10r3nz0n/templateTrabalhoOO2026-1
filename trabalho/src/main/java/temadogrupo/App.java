@@ -40,9 +40,18 @@ public class App {
     // Aplicacao
 
     public static void main(String[] args) {
-        App app = App.getInstancia();
-        app.iniciar();
-        app.executar();
+
+        try {
+
+            App app = App.getInstancia();
+            app.iniciar();
+            app.executar();
+
+        } catch (Exception e) {
+
+            IO.println("Erro: " + e.getMessage());
+
+        }
     }
 
     // Parte Singleton, priva o construtor e tem-se um metodo para devolver o objeto
