@@ -49,7 +49,8 @@ public class Produto {
         return nome;
     }
 
-    private static String validarNome(String nome) {
+    private static String validarNome(String nome)
+            throws IllegalArgumentException {
         if (nome == null) {
             // Pode usar esta excecao generica ou partir para personalizar as excecoes para
             // o sistema

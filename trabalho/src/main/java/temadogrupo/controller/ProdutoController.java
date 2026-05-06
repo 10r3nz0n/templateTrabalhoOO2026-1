@@ -80,8 +80,11 @@ public class ProdutoController {
                 .setId(id)
                 .setNome(nome)
                 .construir();
-
-        produtoService.adicionarProduto(produto);
+        try {
+            produtoService.adicionarProduto(produto);
+        } catch (IllegalArgumentException e) {
+            IO.println("Erro: " + e.getMessage());
+        }
 
         Video.mensagemOk("Produto cadastrado.");
         Video.pausarEnterContinuar();
