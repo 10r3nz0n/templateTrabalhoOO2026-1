@@ -4,6 +4,7 @@ import temadogrupo.config.AplicacaoFactory;
 import temadogrupo.controller.ProdutoController;
 import temadogrupo.utilitarios.Video;
 import temadogrupo.utilitarios.menu.MenuPrincipal;
+import temadogrupo.repository.LogRepository;
 
 /*
  * Classe de entrada da aplicacao.
@@ -45,11 +46,15 @@ public class App {
 
             App app = App.getInstancia();
             app.iniciar();
+            // throw new IllegalArgumentException("teste"); // Para teste e gerar log
             app.executar();
 
         } catch (Exception e) {
 
             Video.mensagemErro("Erro: " + e.getMessage());
+            // Registra o erro num repositorio TXT
+            LogRepository log = new LogRepository();
+            log.registrarExcecao(e, 5000);
 
         }
     }

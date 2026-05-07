@@ -1,0 +1,2 @@
+2026-05-07 07:57:50 - java.lang.IllegalArgumentException: teste
+Classe: temadogrupo.App, Método: main, Arquivo: App.java, Linha: 49
