@@ -83,7 +83,7 @@ public class ProdutoController {
         try {
             produtoService.adicionarProduto(produto);
         } catch (IllegalArgumentException e) {
-            IO.println("Erro: " + e.getMessage());
+            Video.mensagemErro("Erro: " + e.getMessage());
         }
 
         Video.mensagemOk("Produto cadastrado.");

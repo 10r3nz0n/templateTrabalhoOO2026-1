@@ -49,7 +49,7 @@ public class App {
 
         } catch (Exception e) {
 
-            IO.println("Erro: " + e.getMessage());
+            Video.mensagemErro("Erro: " + e.getMessage());
 
         }
     }

@@ -22,7 +22,7 @@ public class ProdutoService {
         return produtoRepository.listar();
     }
 
-    public void adicionarProduto(Produto produto) {
+    public void adicionarProduto(Produto produto) throws IllegalArgumentException {
         // Estas validacaoes sao garantias para o dominio, validam obrigatoriedades,
         // formatos
         // a classe de dominio o faz tambem validacoes e la dispara excecoes
@@ -35,7 +35,6 @@ public class ProdutoService {
         }
 
         // O produto ja existe? Evitar.... consultar o repositorio
-
         produtoRepository.adicionar(produto);
     }
 
