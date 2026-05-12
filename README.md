@@ -6,6 +6,11 @@ Projeto didatico com App, Menu, Controller, Service e Repository.
 
 JDK 25, pois as classes utilitarias usam `java.lang.IO`.
 
+## Como clonar
+
+- Entra na pasta de seu workspace de projetos pelo terminal.
+- Digite git clone https://github.com/10r3nz0n/templateTrabalhoOO2026-1.git
+
 ## Como executar
 
 ```bash
